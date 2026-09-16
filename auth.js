@@ -1,27 +1,42 @@
 // auth.js
-const LOCKED_ACCOUNTS = ['locked_user', 'banned_user'];
+// Danh sách tài khoản bị khóa
+const LOCKED_ACCOUNTS = new Set(['locked_user', 'banned_user']);
+// Regex kiểm tra ký tự đặc biệt
+const SPECIAL_CHAR_REGEX = /[!@#$%^&*(),.?":{}|<>]/;
+// Thông tin đăng nhập hợp lệ (giả lập)
+const VALID_CREDENTIALS = {
+  username: 'admin',
+  password: '123',
+};
+/**
+ * Kiểm tra chuỗi rỗng hoặc chỉ chứa khoảng trắng
+ */
+function isBlank(value) {
+  return !value || value.trim() === '';
+}
+/**
+ * Hàm đăng nhập
+ * @param {string} username
+ * @param {string} password
+ * @returns {boolean}
+ */
 function login(username, password) {
-  // Kiểm tra username rỗng
-  if (!username || username.trim() === '') {
+  // 1. Kiểm tra đầu vào rỗng
+  if (isBlank(username) || isBlank(password)) {
     return false;
   }
-  // Kiểm tra password rỗng
-  if (!password || password.trim() === '') {
+  // 2. Kiểm tra tài khoản bị khóa
+  if (LOCKED_ACCOUNTS.has(username)) {
     return false;
   }
-  // Kiểm tra tài khoản bị khóa
-  if (LOCKED_ACCOUNTS.includes(username)) {
+  // 3. Kiểm tra ký tự đặc biệt trong password
+  if (SPECIAL_CHAR_REGEX.test(password)) {
     return false;
   }
-  // Kiểm tra ký tự đặc biệt trong password (Không hợp lệ)
-  const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-  if (specialCharRegex.test(password)) {
-    return false;
-  }
-  // Kiểm tra thông tin đăng nhập đúng
-  if (username === 'admin' && password === '123') {
-    return true;
-  }
-  return false;
+  // 4. Kiểm tra thông tin đăng nhập
+  return (
+    username === VALID_CREDENTIALS.username &&
+    password === VALID_CREDENTIALS.password
+  );
 }
 module.exports = { login };
