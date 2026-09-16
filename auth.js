@@ -13,7 +13,7 @@ function login(username, password) {
   if (LOCKED_ACCOUNTS.includes(username)) {
     return false;
   }
-  // Kiểm tra ký tự đặc biệt trong password (không hợp lệ)
+  // Kiểm tra ký tự đặc biệt trong password (Không hợp lệ)
   const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
   if (specialCharRegex.test(password)) {
     return false;
