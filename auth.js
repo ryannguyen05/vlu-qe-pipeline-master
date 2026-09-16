@@ -6,7 +6,7 @@ const SPECIAL_CHAR_REGEX = /[!@#$%^&*(),.?":{}|<>]/;
 // Thông tin đăng nhập hợp lệ (giả lập)
 const VALID_CREDENTIALS = {
   username: 'admin',
-  password: '9999',
+  password: '123',
 };
 /**
  * Kiểm tra chuỗi rỗng hoặc chỉ chứa khoảng trắng
